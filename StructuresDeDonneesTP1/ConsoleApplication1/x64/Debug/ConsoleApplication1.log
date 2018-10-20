@@ -1,0 +1,6 @@
+﻿  TP1.cpp
+c:\users\hansiv4\documents\github\structuresdedonneestp1\structuresdedonneestp1\consoleapplication1\tp1.cpp(168): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+c:\users\hansiv4\documents\github\structuresdedonneestp1\structuresdedonneestp1\consoleapplication1\tp1.cpp(176): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+c:\users\hansiv4\documents\github\structuresdedonneestp1\structuresdedonneestp1\consoleapplication1\tp1.cpp(180): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+c:\users\hansiv4\documents\github\structuresdedonneestp1\structuresdedonneestp1\consoleapplication1\tp1.cpp(193): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+  ConsoleApplication1.vcxproj -> C:\Users\HansIV4\Documents\GitHub\StructuresDeDonneesTP1\StructuresDeDonneesTP1\x64\Debug\TP1.exe

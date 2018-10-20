@@ -1,3 +1,39 @@
-cours le plus demande : 8INF144 avec 3 occurences.
-Abdou est supervise par un seul professeur ou n'existe pas.
-Le professeur avec le plus d'etudiants supervise est Abdelaziz avec 6 etudiants.
+Jean
+6
+8INF143
+8INF144
+8INF145
+8INF146
+&
+Aadil
+Aaron
+Abdallah
+Abdel
+Abel
+$
+Abdelaziz
+10
+6MAT143
+6MAT144
+6MAT145
+6MAT146
+&
+Abdelhakim
+Abdelkader
+Abdelkarim
+Abdou
+Abed
+Abel
+$
+Abigael
+22
+ABC1
+ABC2
+ABC3
+8INF144
+&
+Abraham
+Abriel
+Acacio
+Achille
+$

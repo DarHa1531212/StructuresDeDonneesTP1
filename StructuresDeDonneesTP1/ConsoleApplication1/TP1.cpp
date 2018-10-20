@@ -47,14 +47,14 @@ class DossierProfesseur {
 private:
 
 #pragma region ProprietesPrivees
-	void LireFichierDeDonnees(string fichierAOuvrir, Professeur *ptrTeteListeProfesseurs);
-	void LireFichierParametres(string fichierAOuvrir, Professeur *ptrTeteListeProfesseurs);
-	void typeDeDonneeAEnregistrer(string ligne, Professeur *ptrTeteListeProfesseurs);
-	void typeDeParametre(string ligne, Professeur *ptrTeteListeProfesseurs);
-	void enregistrerNomProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs);
-	void enregistrerAcienneteProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs);
-	void enregistrerCoursProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs);
-	void enregistrerEtudiantProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs);
+	void LireFichierDeDonnees(string fichierAOuvrir);
+	void LireFichierParametres(string fichierAOuvrir);
+	void typeDeDonneeAEnregistrer(string ligne);
+	void typeDeParametre(string ligne);
+	void enregistrerNomProfesseur(string ligne);
+	void enregistrerAcienneteProfesseur(string ligne);
+	void enregistrerCoursProfesseur(string ligne);
+	void enregistrerEtudiantProfesseur(string ligne);
 	cours *ajouterCoursListeCoursCommun(cours *queueListe, string sigleCours);
 	Professeur* trouverQueueDeListe(Professeur *ptrTeteListeProfesseurs);
 	cours* trouverQueueDeListe(cours *ptrTeteListeProfesseurs);
@@ -63,20 +63,19 @@ private:
 #pragma endregion ProprietesPrivees
 
 public:
-	#pragma region ProprieteesPubliques
-bool listeAUneTete = false;
+#pragma region ProprieteesPubliques
+	bool listeAUneTete = false;
 	DossierProfesseur();
 	~DossierProfesseur();
-	void suppressionProfesseurParAncienneté(int ancien, Professeur *ptrTeteListeProfesseurs);
-	void afficherCoursCommun(string profA, string profB, Professeur *ptrTeteListeProfesseurs);
-	void afficherCoursLePlusDemander(Professeur *ptrTeteListeProfesseurs);
-	void afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(Professeur *ptrTeteListeProfesseurs, string nomEtu);
-	void afficherProfesseurQuiSuperviseLePlusDEtudiant(Professeur *ptrTeteListeProfesseurs);
+	void suppressionProfesseurParAncienneté(int ancien);
+	void afficherCoursCommun(string profA, string profB);
+	void afficherCoursLePlusDemander();
+	void afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(string nomEtu);
+	void afficherProfesseurQuiSuperviseLePlusDEtudiant();
 	void recopierSorties(string filename);
 	Professeur *tete;
 	Professeur *queue;
 	int typeDonnee = 0;
-	string sorties;
 #pragma endregion ProprieteesPubliques
 };
 
@@ -87,8 +86,7 @@ bool listeAUneTete = false;
 /// Lis le contenu du fichier de données et appelle les fonctions d'enregistrement pour les données lues
 /// </summary>
 /// <param name="fichierAOuvrir">Le  fichier à lire.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::LireFichierDeDonnees(string fichierAOuvrir, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::LireFichierDeDonnees(string fichierAOuvrir)
 {
 	fstream entree;
 	string ligne;
@@ -99,7 +97,7 @@ void DossierProfesseur::LireFichierDeDonnees(string fichierAOuvrir, Professeur *
 		{
 			getline(entree, ligne);
 			cout << ligne;
-			typeDeDonneeAEnregistrer(ligne, ptrTeteListeProfesseurs);
+			typeDeDonneeAEnregistrer(ligne);
 		}
 	}
 	entree.close();
@@ -109,8 +107,7 @@ void DossierProfesseur::LireFichierDeDonnees(string fichierAOuvrir, Professeur *
 /// Lis le fichier de paramètres et appelle les fonctions de traitement des données
 /// </summary>
 /// <param name="fichierAOuvrir">Le fichier à ouvrir contenant les paramètres.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::LireFichierParametres(string fichierAOuvrir, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::LireFichierParametres(string fichierAOuvrir)
 {
 	fstream entree;
 	string ligne;
@@ -121,7 +118,7 @@ void DossierProfesseur::LireFichierParametres(string fichierAOuvrir, Professeur 
 		{
 			getline(entree, ligne);
 			cout << ligne;
-			typeDeParametre(ligne, ptrTeteListeProfesseurs);
+			typeDeParametre(ligne);
 		}
 	}
 	entree.close();
@@ -131,26 +128,24 @@ void DossierProfesseur::LireFichierParametres(string fichierAOuvrir, Professeur 
 /// Reçois la ligne lue et appelle la fonction nécessaire selon le type de donnée à enregistrer
 /// </summary>
 /// <param name="ligne">La ligne qui vient d'être lue par la fonction de lecture.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::typeDeDonneeAEnregistrer(string ligne, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::typeDeDonneeAEnregistrer(string ligne)
 {
 	switch (typeDonnee)
 	{
 	case 0:
-		enregistrerNomProfesseur(ligne, ptrTeteListeProfesseurs);
+		enregistrerNomProfesseur(ligne);
 		break;
 	case 1:
-		enregistrerAcienneteProfesseur(ligne, ptrTeteListeProfesseurs);
+		enregistrerAcienneteProfesseur(ligne);
 		break;
 	case 2:
-		enregistrerCoursProfesseur(ligne, ptrTeteListeProfesseurs);
+		enregistrerCoursProfesseur(ligne);
 		break;
 	case 3:
-		enregistrerEtudiantProfesseur(ligne, ptrTeteListeProfesseurs);
+		enregistrerEtudiantProfesseur(ligne);
 		break;
 	default:
 		cout << "Erreur : int inconnu" << endl;
-		sorties += "Erreur : int inconnu\n";
 		system("pause");
 		break;
 	}
@@ -160,8 +155,7 @@ void DossierProfesseur::typeDeDonneeAEnregistrer(string ligne, Professeur *ptrTe
 /// Reçois la ligne lue par la fonction de lecture des paramêtres et appelle la fonction pertinente pour effectuer les traitements
 /// </summary>
 /// <param name="ligne">La ligne lue et à interpréter</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeProfesseurs)
+void DossierProfesseur::typeDeParametre(string ligne)
 {
 	string parametreDAction = ligne.substr(0, 1);
 
@@ -170,10 +164,11 @@ void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeP
 		int longueurLigne = ligne.length();
 		string argument = ligne.substr(2, longueurLigne - 2);
 		int argumentLigne = std::stoi(argument);
-		suppressionProfesseurParAncienneté(argumentLigne, ptrTeteListeProfesseurs);
+		suppressionProfesseurParAncienneté(argumentLigne);
 	}
 	else if (parametreDAction == "&")
 	{
+		//Jeu de substring pour isoler les deux arguments de la ligne
 		int longueurLigne = ligne.length();
 		string argument = ligne.substr(2, longueurLigne - 2);
 		std::size_t pos = argument.find(" ");
@@ -181,11 +176,13 @@ void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeP
 		int longueurNomProfB = nomProfB.length();
 		std::size_t pos2 = ligne.find(" ");
 		string nomProfA = ligne.substr(pos2 + 1, longueurNomProfB);
-		afficherCoursCommun(nomProfA, nomProfB, ptrTeteListeProfesseurs);
+
+
+		afficherCoursCommun(nomProfA, nomProfB);
 	}
 	else if (parametreDAction == "+")
 	{
-		afficherCoursLePlusDemander(ptrTeteListeProfesseurs);
+		afficherCoursLePlusDemander();
 	}
 	else if (parametreDAction == "*")
 	{
@@ -193,11 +190,11 @@ void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeP
 		string argument = ligne.substr(2, longueurLigne - 2);
 		std::size_t pos = argument.find(" ");
 		string nomEtu = argument.substr(pos + 1);
-		afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(ptrTeteListeProfesseurs, nomEtu);
+		afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(nomEtu);
 	}
 	else if (parametreDAction == "@")
 	{
-		afficherProfesseurQuiSuperviseLePlusDEtudiant(ptrTeteListeProfesseurs);
+		afficherProfesseurQuiSuperviseLePlusDEtudiant();
 	}
 	else if (parametreDAction == "$")
 	{
@@ -206,7 +203,6 @@ void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeP
 	else
 	{
 		cout << "Erreur de parametre." << endl;
-		sorties += "Erreur de parametre.\n";
 		system("pause");
 	}
 }
@@ -215,10 +211,9 @@ void DossierProfesseur::typeDeParametre(string ligne, Professeur * ptrTeteListeP
 /// Enregistre le nom d'un nouveau professeur à la fin de la liste.
 /// </summary>
 /// <param name="ligne">La ligne venant d'être lue et qui contient le nom du professseur à enregistrer</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::enregistrerNomProfesseur(string ligneLue, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::enregistrerNomProfesseur(string ligneLue)
 {
-	Professeur *queueListeProfesseurs = trouverQueueDeListe(ptrTeteListeProfesseurs);
+	Professeur *queueListeProfesseurs = trouverQueueDeListe(this->tete);
 	queueListeProfesseurs->nom = ligneLue;
 	typeDonnee = 1;
 }
@@ -227,10 +222,9 @@ void DossierProfesseur::enregistrerNomProfesseur(string ligneLue, Professeur *pt
 /// Enregistre l'ancienneté d'un aciennete professeur.
 /// </summary>
 /// <param name="ligne">La ligne lue contenant l'ancienneté du professeur.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::enregistrerAcienneteProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::enregistrerAcienneteProfesseur(string ligne)
 {
-	Professeur *queueListeProfesseurs = trouverQueueDeListe(ptrTeteListeProfesseurs);
+	Professeur *queueListeProfesseurs = trouverQueueDeListe(this->tete);
 	queueListeProfesseurs->ancien = std::stoi(ligne);
 	typeDonnee = 2;
 }
@@ -239,8 +233,7 @@ void DossierProfesseur::enregistrerAcienneteProfesseur(string ligne, Professeur 
 /// Ajoute un cours à la liste de cours du dernier professeur dans la liste
 /// </summary>
 /// <param name="ligne">La ligne lue du fichier contenant le cours à ajouter.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::enregistrerCoursProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::enregistrerCoursProfesseur(string ligne)
 {
 	if (ligne == "&") {
 		typeDonnee = 3;
@@ -251,7 +244,7 @@ void DossierProfesseur::enregistrerCoursProfesseur(string ligne, Professeur *ptr
 		membreDeLaListeDeCours->suivant = nullptr;
 		membreDeLaListeDeCours->sigle = ligne;
 
-		Professeur *queueListeProfesseurs = trouverQueueDeListe(ptrTeteListeProfesseurs);
+		Professeur *queueListeProfesseurs = trouverQueueDeListe(this->tete);
 
 		if (queueListeProfesseurs->teteListeDeCours->sigle.empty())
 		{
@@ -273,12 +266,11 @@ void DossierProfesseur::enregistrerCoursProfesseur(string ligne, Professeur *ptr
 /// Ajoute un cours à la liste de cours du dernier professeur dans la liste 
 /// </summary>
 /// <param name="ligne">La ligne lue du fichier contenant l'étudiant à ajouter.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de la liste des professeurs.</param>
-void DossierProfesseur::enregistrerEtudiantProfesseur(string ligne, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::enregistrerEtudiantProfesseur(string ligne)
 {
 	if (ligne == "$") {
 		Professeur *nouveauProfesseur = new Professeur;
-		Professeur *queueListe = trouverQueueDeListe(ptrTeteListeProfesseurs);
+		Professeur *queueListe = trouverQueueDeListe(this->tete);
 		initialiserPointerProfesseurNullPtr(nouveauProfesseur);
 		queueListe->suivant = nouveauProfesseur;
 
@@ -290,7 +282,7 @@ void DossierProfesseur::enregistrerEtudiantProfesseur(string ligne, Professeur *
 		membreDeLaListeEtudiants->suivant = nullptr;
 		membreDeLaListeEtudiants->nom = ligne;
 
-		Professeur *queueListeProfesseurs = trouverQueueDeListe(ptrTeteListeProfesseurs);
+		Professeur *queueListeProfesseurs = trouverQueueDeListe(this->tete);
 
 		if (queueListeProfesseurs->teteListeEtudiants->nom.empty())
 		{
@@ -382,16 +374,19 @@ void DossierProfesseur::initialiserPointerProfesseurNullPtr(Professeur * ptrTete
 }
 
 /// <summary>
+/// Ctor
 /// Initializes a new instance of the <see cref="DossierProfesseur"/> class.
 /// </summary>
 DossierProfesseur::DossierProfesseur()
 {
 	Professeur *teteListeProfesseur = new Professeur;
-	initialiserPointerProfesseurNullPtr(teteListeProfesseur);
+	this->tete = new Professeur;
+	initialiserPointerProfesseurNullPtr(this->tete);
+	//initialiserPointerProfesseurNullPtr(teteListeProfesseur);
 
-	LireFichierDeDonnees("FP.txt", teteListeProfesseur);
+	LireFichierDeDonnees("FP.txt");
 
-	LireFichierParametres("FT.txt", teteListeProfesseur);
+	LireFichierParametres("FT.txt");
 
 }
 
@@ -403,10 +398,9 @@ DossierProfesseur::~DossierProfesseur()
 /// Supprime un ou des professeur(s) selon l'ancienneté
 /// </summary>
 /// <param name="ancien">L'ancienneté selon laquelle les professeurs sont supprimée.</param>
-/// <param name="ptrTeteListeProfesseurs">The PTR tete liste professeurs.</param>
-void DossierProfesseur::suppressionProfesseurParAncienneté(int ancien, Professeur *ptrTeteListeProfesseurs)
+void DossierProfesseur::suppressionProfesseurParAncienneté(int ancien)
 {
-	Professeur *elementActuel = ptrTeteListeProfesseurs;
+	Professeur *elementActuel = this->tete;
 	Professeur *elementPrecedent = new Professeur;
 	initialiserPointerProfesseurNullPtr(elementPrecedent);
 
@@ -414,6 +408,12 @@ void DossierProfesseur::suppressionProfesseurParAncienneté(int ancien, Professeu
 	{
 		if (elementActuel->ancien == ancien)
 		{
+			if (elementActuel == this->tete)
+			{
+				this->tete = this->tete->suivant;
+			}
+
+			
 			elementPrecedent->suivant = elementActuel->suivant;
 			delete elementActuel;
 			break;
@@ -433,18 +433,19 @@ void DossierProfesseur::suppressionProfesseurParAncienneté(int ancien, Professeu
 /// </summary>
 /// <param name="profA">Le nom du professeur A.</param>
 /// <param name="profB">Le nom du professeur B.</param>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de liste de professeurs.</param>
-void DossierProfesseur::afficherCoursCommun(string profA, string profB, Professeur * ptrTeteListeProfesseurs)
+void DossierProfesseur::afficherCoursCommun(string profA, string profB)
 {
 	int trouve = 0;
-	Professeur *profActuel = ptrTeteListeProfesseurs;
+	Professeur *profActuel = this->tete;
 	Professeur *ptrProfA = nullptr;
 	Professeur *ptrProfB = nullptr;
 	cours *coursActuelProfA = nullptr;
 	cours *coursActuelProfB = nullptr;
 	cours *teteListeCoursCommun = nullptr;
+	cours *ptrCoursListeCommunActuel = nullptr;
 	cours *queueListeCoursCommun = nullptr;
 
+	//trouve les professeurs A et B dans la liste de professeurs à partir des noms
 	while (trouve != 2)
 	{
 		if (profActuel->nom == profA)
@@ -464,6 +465,8 @@ void DossierProfesseur::afficherCoursCommun(string profA, string profB, Professe
 		}
 	}
 
+	//TODO: extract this method
+	//crée une liste des cours que les professeurs ont en commun
 	coursActuelProfA = ptrProfA->teteListeDeCours;
 	coursActuelProfB = ptrProfB->teteListeDeCours;
 
@@ -484,17 +487,26 @@ void DossierProfesseur::afficherCoursCommun(string profA, string profB, Professe
 		coursActuelProfB = ptrProfB->teteListeDeCours;
 		coursActuelProfA = coursActuelProfA->suivant;
 	}
+
+	//affiche la liste des cours que les professeurs ont en commun
+	ptrCoursListeCommunActuel = teteListeCoursCommun;
+	cout << "Les cours en commun entre les professeurs " << profA << " et " << profB << " sont: ";
+	while (ptrCoursListeCommunActuel != nullptr)
+	{
+		cout << ptrCoursListeCommunActuel->sigle << ", ";
+		ptrCoursListeCommunActuel = ptrCoursListeCommunActuel->suivant;
+	}
+	cout << endl;
 }
 
 /// <summary>
 /// Crée une liste exhaustive de tous les cours de tous les professeurs avec le nombre de professeurs qui 
 /// donnent chaque cours et trouve le cours le plus populaire à partir de la liste précédemment créée.
 /// </summary>
-/// <param name="ptrTeteListeProfesseurs">Pointeur vers la tête de liste de professeurs.</param>
-void DossierProfesseur::afficherCoursLePlusDemander(Professeur * ptrTeteListeProfesseurs)
+void DossierProfesseur::afficherCoursLePlusDemander()
 {
 	bool trouve = false;
-	Professeur *profActuel = ptrTeteListeProfesseurs;
+	Professeur *profActuel = this->tete;
 
 	cours *teteListeExhaustiveCours = nullptr;
 	cours *listeExhaustiveActuelle = nullptr;
@@ -541,18 +553,16 @@ void DossierProfesseur::afficherCoursLePlusDemander(Professeur * ptrTeteListePro
 		listeExhaustiveActuelle = listeExhaustiveActuelle->suivant;
 	}
 	cout << "cours le plus demande : " << coursLePlusDemande->sigle << " avec " << coursLePlusDemande->nbOccurence << " occurences." << endl;
-	sorties += "cours le plus demande : " + coursLePlusDemande->sigle + " avec " + to_string(coursLePlusDemande->nbOccurence) + " occurences.\n";
 }
 /// <summary>
 /// Détermine si un étudiant est supervisé par plus d'un professeur en bouclant au travers des listes d'étudiants des
 /// professeurs et compte le nombre de correspondances trouvéess. Le résultat est affiché dans la console.
 /// </summary>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de liste de professeurs.</param>
 /// <param name="nomEtu">Le nom de l'etudiant.</param>
-void DossierProfesseur::afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(Professeur * ptrTeteListeProfesseurs, string nomEtu)
+void DossierProfesseur::afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(string nomEtu)
 {
 	int trouve = 0;
-	Professeur *profActuel = ptrTeteListeProfesseurs;
+	Professeur *profActuel = this->tete;
 
 	while (profActuel != nullptr)
 	{
@@ -569,12 +579,10 @@ void DossierProfesseur::afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(Pro
 	}
 	if (trouve >= 2) {
 		cout << nomEtu << " est supervise par " << trouve << " professeurs." << endl;
-		sorties += nomEtu + " est supervise par " + to_string(trouve) + " professeurs.\n";
 	}
 	else
 	{
 		cout << nomEtu << " est supervise par un seul professeur ou n'existe pas." << endl;
-		sorties += nomEtu + " est supervise par un seul professeur ou n'existe pas.\n";
 	}
 }
 
@@ -582,11 +590,10 @@ void DossierProfesseur::afficherSiUnEtudiantEstSuperviseParPlusDUnProfesseur(Pro
 /// Boucle au travers de la liste de professeurs et compte le nombre d'étudians supervisés par chaque professeur.
 /// Le professeur supervisant le plus grand nombre d'étudiants est affiché dans la console.
 /// </summary>
-/// <param name="ptrTeteListeProfesseurs">Le pointeur de tête de liste de professeurs.</param>
-void DossierProfesseur::afficherProfesseurQuiSuperviseLePlusDEtudiant(Professeur * ptrTeteListeProfesseurs)
+void DossierProfesseur::afficherProfesseurQuiSuperviseLePlusDEtudiant()
 {
-	Professeur *professeurAyantLePlusDEtudiants = ptrTeteListeProfesseurs;
-	Professeur *professeurActuel = ptrTeteListeProfesseurs;
+	Professeur *professeurAyantLePlusDEtudiants = this->tete;
+	Professeur *professeurActuel = this->tete;
 
 	while (professeurActuel != nullptr)
 	{
@@ -606,7 +613,6 @@ void DossierProfesseur::afficherProfesseurQuiSuperviseLePlusDEtudiant(Professeur
 	}
 
 	cout << "Le professeur avec le plus d'etudiants supervise est " << professeurAyantLePlusDEtudiants->nom << " avec " << professeurAyantLePlusDEtudiants->nombreEtudiants << " etudiants." << endl;
-	sorties += "Le professeur avec le plus d'etudiants supervise est " + professeurAyantLePlusDEtudiants->nom + " avec " + to_string(professeurAyantLePlusDEtudiants->nombreEtudiants) + " etudiants.\n";
 }
 
 /// <summary>
@@ -615,15 +621,51 @@ void DossierProfesseur::afficherProfesseurQuiSuperviseLePlusDEtudiant(Professeur
 /// <param name="filename">Le nom du fichier dans lequel les sorties seront recopiées.</param>
 void DossierProfesseur::recopierSorties(string filename)
 {
-	ofstream fichier(filename, ios::out);
+	Professeur *ptrProfActuel = this->tete;
+	cours *ptrCoursActuel = nullptr;
+	etudiant *ptrEtudiantActuel = nullptr;
 
+	ofstream fichier(filename, ios::out);
 	if (fichier)
 	{
-		fichier << sorties;
+		while (ptrProfActuel != nullptr)
+		{
+			
+			ptrCoursActuel = ptrProfActuel->teteListeDeCours;
+			ptrEtudiantActuel = ptrProfActuel->teteListeEtudiants;
+			
+			fichier << ptrProfActuel->nom << endl;
+			fichier << ptrProfActuel->ancien << endl;
+
+			while (ptrCoursActuel != nullptr)
+			{
+				fichier << ptrCoursActuel->sigle << endl;
+				ptrCoursActuel = ptrCoursActuel->suivant;
+			}
+			fichier << "&" << endl;
+
+			while (ptrEtudiantActuel != nullptr)
+			{
+
+				fichier << ptrEtudiantActuel->nom << endl;
+				ptrEtudiantActuel = ptrEtudiantActuel->suivant;
+			}
+			fichier << "$" << endl;
+			ptrProfActuel = ptrProfActuel->suivant;
+		}
 		fichier.close();
 	}
 	else
-		cerr << "Impossible d'ouvrir le fichier !" << endl;
+
+
+
+
+
+
+	//	fichier << sorties;
+
+
+	cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
 
 

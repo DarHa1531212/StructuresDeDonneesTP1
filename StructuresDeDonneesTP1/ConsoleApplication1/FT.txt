@@ -1,5 +1,2 @@
-& Eric Jean
-+
-* Abdou
-@
+% 3
 $
